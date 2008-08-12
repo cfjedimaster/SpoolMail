@@ -301,8 +301,7 @@ td a {
 <cfif qMail.recordCount>
 
 	<cfoutput query="qMail" startrow="#url.start#" maxrows="#application.perpage#">
-		<cfset info = getMail(name)>
-
+	<cfset info = getMail(filename=name, isMailBodyDesired=false)><!--- body can be huge, and isn't needed for list of emails --->
 		<cfif currentRow mod 2>
 			<cfset vClass = "class=""rowA""">
 		<cfelse>

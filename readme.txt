@@ -17,6 +17,18 @@ Copyright 2006 Raymond Camden
 If you find this application worthy, I have a Amazon wish list set up (www.amazon.com/o/registry/2TCL1D08EZEYE ). Gifts are always welcome. ;)
 Install directions may be found in install.doc/pdf.
 
+Last Updated: October 31, 2007 (Version 1.4)
+This update was done by Mek Logan. I've pasted his changes below. I 
+can personally attest to his speed improvements. They are awesome!
+
+Here's a summary of the changes:
+top.cfm -- changed one line to pass flag so body is not parsed for each file in the email list (since body is not used in that anyhow).
+udf.cfm
+Changed caching scheme -- rather than always cache message metadata plus body, only caches metadata.  This is particularly important for large numbers of massive emails (which has actually crashed CF for us), but also significantly improves startup performance and email listing speed for all uses.  It does slow down (slightly) actually reading an email, but in our case at least, we'll typically scroll through many emails to find the one we want to read, so this is an easy tradeoff.
+Switched body parsing code to use StringBuffers for concatenation (might be worth doing this to the ActivateURL UDF as well).  The increased speed from this more than makes up for any slowdown due to the above change.
+Rearranged file so getMail(), the primary function, is on top, with helper UDF's below.  Easy to undo if you prefer the previous order (just move the CFScript block at the bottom up to the top).
+Assorted small tweaks (use of arguments scope, code cleanup).
+
 Last Updated: October 31, 2007 (Version 1.3.2)
 Fixed a dupe body in bottom.cfm
 
