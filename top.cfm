@@ -20,7 +20,7 @@
 	<cfset application.perpage = url.PerPage>
 </cfif>
 
-<cfif structKeyExists(form,"delete") and structKeyExists(form, "doit") and len(form.doit)>
+<cfif (structKeyExists(form,"delete") or structKeyExists(form, "delete.x")) and structKeyExists(form, "doit") and len(form.doit)>
 	<cfloop index="theFile" list="#form.doit#">
 		<cfif fileExists(application.maildir & "/" & theFile)>
 			<cffile action="delete" file="#application.maildir#/#theFile#">
@@ -28,7 +28,7 @@
 	</cfloop>
 </cfif>
 
-<cfif structKeyExists(form,"move") and structKeyExists(form, "doit") and len(form.doit)>
+<cfif (structKeyExists(form,"move") or structKeyExists(form,"move.x")) and structKeyExists(form, "doit") and len(form.doit)>
 	<cfloop index="theFile" list="#form.doit#">
 		<cfif fileExists(application.maildir & "/" & theFile)>
 			<cffile action="move" source="#application.maildir#/#theFile#" destination="#application.spooldir#/#thefile#">
