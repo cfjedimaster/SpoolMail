@@ -59,6 +59,11 @@
 		<cfset result.subject = trim(mid(mail, pos.pos[2], pos.len[2]))>
 	</cfif>
 
+	<cfset pos = reFindNoCase("(?m)^replyto: (.*?)\n", mail, 1, 1)>
+	<cfif pos.len[1] is not 0>
+		<cfset result.replyto = trim(mid(mail, pos.pos[2], pos.len[2]))>
+	</cfif>
+
 	<!--- parse files: --->
 	<cfset result.attachments = arrayNew(1)>
 	<cfset pos = reFindNoCase("(?m)^file: (.*?)\n", mail, 1, 1)>
@@ -214,4 +219,33 @@
 		}
 		return outString;
 	}
+	
+/**
+ * Replaces oldSubString with newSubString from a specified starting position while ignoring case.
+ * 
+ * @param theString 	 The string to modify. (Required)
+ * @param oldSubString 	  The substring to replace. (Required)
+ * @param newSubString 	 The substring to use as a replacement. (Required)
+ * @param startIndex 	 Where to start replacing in the string. (Required)
+ * @param theScope 	  Number of replacements to make. Default is "ONE". Value can be "ONE" or "ALL." (Optional)
+ * @return Returns a string. 
+ * @author Shawn Seley (shawnse@aol.com) 
+ * @version 1, June 26, 2002 
+ */
+function ReplaceAtNoCase(theString, oldSubString, newSubString, startIndex){
+	var targetString  = "";
+	var preString     = "";
+
+	var theScope      = "ONE";
+	if(ArrayLen(Arguments) GTE 5) theScope    = Arguments[5];
+
+	if (startIndex LTE Len(theString)) {
+		targetString = Right(theString, Len(theString)-startIndex+1);
+		if (startIndex GT 1) preString = Left(theString, startIndex-1);
+		return preString & ReplaceNoCase(targetString, oldSubString, newSubString, theScope);
+	} else {
+		return theString;
+	}
+}
+	
 </cfscript>

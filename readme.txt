@@ -17,6 +17,10 @@ Copyright 2006 Raymond Camden
 If you find this application worthy, I have a Amazon wish list set up (www.amazon.com/o/registry/2TCL1D08EZEYE ). Gifts are always welcome. ;)
 Install directions may be found in install.doc/pdf.
 
+Last Updated: October 13, 2008 (Version 1.5)
+Lucas Sherwood added support for ReplyTo display.
+Dharmesh Goal added support for editing/resending emails.
+
 Last Updated: October 31, 2007 (Version 1.4)
 This update was done by Mek Logan. I've pasted his changes below. I 
 can personally attest to his speed improvements. They are awesome!
