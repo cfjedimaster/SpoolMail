@@ -76,6 +76,13 @@
 	<cfset mailbody = trim(mail.body)>
 </cfif>
 
+<cfset senderCheck = REFind("<([^>].*)>", mail.sender,1, true) />
+<cfif arrayLen(senderCheck.len) EQ 2>
+	<cfset mail.mailtosender = mid(mail.sender, senderCheck.pos[2], senderCheck.len[2]) />
+<cfelse>
+	<cfset mail.mailtosender = mail.sender />
+</cfif>
+
 <cfoutput>
 <style>
 h2 {
@@ -115,11 +122,11 @@ pre {
 	</tr>
 	<tr>
 		<td><b>From:</b></td>
-		<td><a href="mailto:#mail.sender#">#HTMLEditFormat(mail.sender)#</a></td>
+		<td><a href="mailto:#mail.mailtosender#">#HTMLEditFormat(mail.sender)#</a></td>
 		<td></td>
 		<td>
-			<input type="Text" name="MailSender" value="#mail.sender#">
-			<input type="hidden" name="MailSender_orig" value="#mail.sender#">
+			<input type="Text" name="MailSender" value="#HTMLEditFormat(mail.sender)#">
+			<input type="hidden" name="MailSender_orig" value="#HTMLEditFormat(mail.sender)#">
 		</td>
 	</tr>
 	<cfif structKeyExists(mail, "replyto")>

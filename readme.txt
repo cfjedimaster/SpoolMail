@@ -17,6 +17,9 @@ Copyright 2006 Raymond Camden
 If you find this application worthy, I have a Amazon wish list set up (www.amazon.com/o/registry/2TCL1D08EZEYE ). Gifts are always welcome. ;)
 Install directions may be found in install.doc/pdf.
 
+Last Updated: April 8, 2009 (Version 1.5.001)
+Scott Stroz fixed an issue where the sender's email address would be displayed and linked incorrectly if the address was in the format of 'Sender name <sender address>'
+
 Last Updated: October 13, 2008 (Version 1.5)
 Lucas Sherwood added support for ReplyTo display.
 Dharmesh Goal added support for editing/resending emails.
