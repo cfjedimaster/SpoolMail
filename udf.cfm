@@ -64,6 +64,11 @@
 		<cfset result.replyto = trim(mid(mail, pos.pos[2], pos.len[2]))>
 	</cfif>
 
+	<cfset pos = reFindNoCase("(?m)^failto: (.*?)\n", mail, 1, 1)>
+	<cfif pos.len[1] is not 0>
+		<cfset result.failto = trim(mid(mail, pos.pos[2], pos.len[2]))>
+	</cfif>
+	
 	<!--- parse files: --->
 	<cfset result.attachments = arrayNew(1)>
 	<cfset pos = reFindNoCase("(?m)^file: (.*?)\n", mail, 1, 1)>

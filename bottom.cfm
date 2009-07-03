@@ -129,6 +129,12 @@ pre {
 		<td><a href="mailto:#mail.replyto#">#HTMLEditFormat(mail.replyto)#</a></td>
 		</tr>
 	</cfif>
+	<cfif structKeyExists(mail, "failto")>
+		<tr>
+		<td><b>FailTo:</b></td>
+		<td><a href="mailto:#mail.failto#">#HTMLEditFormat(mail.failto)#</a></td>
+		</tr>
+	</cfif>	
 	<tr>
 		<td><b>Subject:</b></td>
 		<td>#HTMLEditFormat(mail.subject)#</td>
