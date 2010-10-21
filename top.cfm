@@ -163,6 +163,49 @@
 </script>
 
 <style>
+##gradient-style {
+font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size:12px;
+width:94%;
+text-align:left;
+border-collapse:collapse;
+margin:20px;
+}
+
+##gradient-style th {
+font-size:13px;
+font-weight:normal;
+background:##b9c9fe url("images/gradhead.png") repeat-x;
+border-top:2px solid ##d3ddff;
+border-bottom:1px solid ##fff;
+color:##039;
+padding:8px;
+}
+
+##gradient-style td {
+border-bottom:1px solid ##fff;
+color:##669;
+border-top:1px solid ##fff;
+background:##e8edff url("images/gradback.png") repeat-x;
+padding:8px;
+}
+
+##gradient-style tfoot tr td {
+background:##e8edff;
+font-size:12px;
+color:##99c;
+}
+
+##gradient-style tbody tr:hover td {
+background:##d0dafd url("images/gradhover.png") repeat-x;
+color:##339;
+}
+
+tr {
+border-color:inherit;
+display:table-row;
+vertical-align:inherit;
+}
 td, p {
 	font-family: Arial;
 	font-size: 11px;
@@ -179,7 +222,10 @@ th {
 	background-color: ##ffffff;
 }
 .header {
-	background-color: ##c0c0c0;
+	background-color: ##B9C9FE;
+	border-bottom:10px solid white;
+	font-weight:13px;
+	padding:8px;
 }
 td a {
 	color: black;
@@ -201,41 +247,47 @@ td a {
 ##mailbar {
 	position: relative;
 	margin: 0px 0px 5px 0px;
+	padding-left:10px;
+	width:94%;
 }
 ##mButtons {
 	float: left;
+	padding-left:12px;
+	margin-top:8px;
 }
 ##pageCount {
 	float: right;
 	text-align: right;
 	font-family: Arial;
 	font-size: small;
+	padding-right:60px;
+	margin-top:8px;
 }
 </style>
 
 <cfoutput>
-<form action="top.cfm" method="post" name="mailStatus">
-	<input type="Hidden" name="start" value="#url.start#"
-<div id="mailbar">
-	<div id="mButtons">
-	<input type="Image" name="reload" onClick="refreshBottom();" src="images/reload.jpg" value="reload" alt="reload" title="reload"> 
-	<cfif qMail.recordCount>
-	<img src="images/sep.jpg">
-	<input type="Image" name="delete"  src="images/delete.jpg" onClick="refreshBottom();" value="delete" alt="delete email" title="delete email">
-	<img src="images/sep.jpg">
-	<input type="Image" name="move"    src="images/respool.jpg" onClick="refreshBottom();" value="move" alt="reprocess email" title="reprocess email">
-	<!---
-	<img src="images/sep.jpg">
-	<input type="Image" name="server"  src="images/server.jpg" value="server" onClick="refreshBottom();" alt="Change EMail Server" title="change email server">
-	<input type="Image" name="redirect" src="images/redirect.jpg" value="redirect" alt="redirect email" title="redirect email">
-	<img src="images/show.jpg" onclick="doHide('hBox');" alt="get server / redirect info" title="get server / redirect info">
-	--->
-	</cfif>
-	</div>
-	<div ID="hBox" style="display:none;">
-	server: <input type="Text" name="zServer"  value="username:password@server:port" maxlength="80" size="70" class="box"><br>
-	redirect: <input type="Text" name="zRedirect" value="name@email.com" maxlength="80" size="70" class="box">
-	</div>
+	<form action="top.cfm" method="post" name="mailStatus">
+		<input type="Hidden" name="start" value="#url.start#"
+	<div id="mailbar">
+		<div id="mButtons">
+		<input type="Image" name="reload" onClick="refreshBottom();" src="images/reload.png" value="reload" alt="reload" title="reload"> 
+		<cfif qMail.recordCount>
+		<img src="images/pixel.gif">
+		<input type="Image" name="delete"  src="images/delete.png" onClick="refreshBottom();" value="delete" alt="delete email" title="delete email">
+		<img src="images/pixel.gif">
+		<input type="Image" name="move"    src="images/respool.png" onClick="refreshBottom();" value="move" alt="reprocess email" title="reprocess email">
+		<!---
+		<img src="images/sep.jpg">
+		<input type="Image" name="server"  src="images/server.jpg" value="server" onClick="refreshBottom();" alt="Change EMail Server" title="change email server">
+		<input type="Image" name="redirect" src="images/redirect.jpg" value="redirect" alt="redirect email" title="redirect email">
+		<img src="images/show.jpg" onclick="doHide('hBox');" alt="get server / redirect info" title="get server / redirect info">
+		--->
+		</cfif>
+		</div>
+		<div ID="hBox" style="display:none;">
+		server: <input type="Text" name="zServer"  value="username:password@server:port" maxlength="80" size="70" class="box"><br>
+		redirect: <input type="Text" name="zRedirect" value="name@email.com" maxlength="80" size="70" class="box">
+		</div>
 </cfoutput>
 
 <cfif url.Start GT qMail.recordCount>
@@ -249,43 +301,44 @@ td a {
 
 
 	<div id="pageCount">
-	queue as of <b>#DateFormat(now(),"d-mmm-yyyy")# #TimeFormat(now(),"H:mm:ss")#</b><br>
-	<cfif qMail.recordCount and qMail.recordCount GT application.perpage>
-		<cfif url.start gt 1>
-			<a href="top.cfm?start=#url.start-application.perpage#" onclick="doPerPage(this)">Previous</a>
-		<cfelse>
-			Previous
-		</cfif>
-		/
-		<cfif url.start + application.perpage lt qMail.recordCount>
-			<a href="top.cfm?start=#url.start+application.perpage#" onclick="doPerPage(this)">Next</a>
-		<cfelse>
-			Next
-		</cfif>
-		#url.start# - #min(url.start+application.perpage, qMail.recordcount)# of #qMail.recordcount# emails &nbsp;&nbsp;&nbsp;
-	<cfelseif qMail.recordCount GT 0>
-		#url.start# - #min(url.start+application.perpage, qMail.recordcount)# emails
-	</cfif>
-	<cfif qMail.recordCount GT 0>
-		<select name="zPerPage" id="PerPage">
-		<cfloop index="x" list="5,10,15,20,25,50,75,100">
-			<cfif x EQ application.perpage>
-				<option value="#x#" selected>#x#</option>
+		queue as of <b>#DateFormat(now(),"d-mmm-yyyy")# #TimeFormat(now(),"H:mm:ss")#</b><br>
+		<cfif qMail.recordCount and qMail.recordCount GT application.perpage>
+			<cfif url.start gt 1>
+				<a href="top.cfm?start=#url.start-application.perpage#" onclick="doPerPage(this)">Previous</a>
 			<cfelse>
-				<option value="#x#">#x#</option>
-			</cfif>	
-		</cfloop>
-		</select>
-	</cfif>
+				Previous
+			</cfif>
+			/
+			<cfif url.start + application.perpage lt qMail.recordCount>
+				<a href="top.cfm?start=#url.start+application.perpage#" onclick="doPerPage(this)">Next</a>
+			<cfelse>
+				Next
+			</cfif>
+			#url.start# - #min(url.start+application.perpage, qMail.recordcount)# of #qMail.recordcount# emails &nbsp;&nbsp;&nbsp;
+		<cfelseif qMail.recordCount GT 0>
+			#url.start# - #min(url.start+application.perpage, qMail.recordcount)# emails
+		</cfif>
+		<cfif qMail.recordCount GT 0>
+			<select name="zPerPage" id="PerPage">
+			<cfloop index="x" list="5,10,15,20,25,50,75,100">
+				<cfif x EQ application.perpage>
+					<option value="#x#" selected>#x#</option>
+				<cfelse>
+					<option value="#x#">#x#</option>
+				</cfif>	
+			</cfloop>
+			</select>
+		</cfif>
 	</div>
 	<div style="clear:both;"></div>
 </div>
-<table width="100%" border=1>
+<table width="98%" cellspacing=0 cellpadding=3 border=0 id="gradient-style">
+<thead>
 	<tr class="header">
 		<th class="norightborder">
 			<cfif qMail.recordcount gt 1>
-				All<br />
 				<input type="checkbox" name="checkit" id="checkit" onclick="toggleCheckboxes(this,document.forms.mailStatus.doit);" />
+				All
 			<cfelse>
 				&nbsp;&nbsp;
 			</cfif>
@@ -296,10 +349,12 @@ td a {
 		<th>Size</th>
 		<th>Date</th>
 	</tr>
+</thead>
 </cfoutput>
 
 <cfif qMail.recordCount>
 
+	<tbody>
 	<cfoutput query="qMail" startrow="#url.start#" maxrows="#application.perpage#">
 	<cfset info = getMail(filename=name, isMailBodyDesired=false)><!--- body can be huge, and isn't needed for list of emails --->
 		<cfif currentRow mod 2>
@@ -307,10 +362,9 @@ td a {
 		<cfelse>
 			<cfset vClass = "class=""rowB""">
 		</cfif>
-		
-		<tr #vClass#>
+		<tr #vClass# onclick="parent.bottom.location='bottom.cfm?mail=#urlEncodedFormat(name)#';">
 			<!--- Cutter 01.25.06: Split 'Subject' column in two to separate checkboxes from message subjects --->
-			<td class="norightborder" style="text-align:center">
+			<td class="norightborder" style="text-align:left">
 				<!--- Cutter 01.25.06: Add onclick function call to check 'Select All' box --->
 				<input type="checkbox" name="doit" id="doit" value="#name#" <cfif qMail.recordcount gt 1>onClick="uncheckSelectAllBox(document.forms.mailStatus.checkit,this)"</cfif> />
 			</td>
@@ -321,7 +375,7 @@ td a {
 			<td><cfif structKeyExists(info, "sent") and isDate(info.sent)>#dateFormat(info.sent)# #timeFormat(info.sent)#<cfelse>n/a</cfif></td>
 		</tr>
 	</cfoutput>
-
+	</tbody>
 <cfelse>
 
 	<cfoutput>

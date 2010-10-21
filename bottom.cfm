@@ -77,7 +77,6 @@
 </cfif>
 
 
-<cfoutput>
 <style>
 h2 {
 	font-family: Arial;
@@ -92,21 +91,61 @@ pre {
 	font-family: Courier;
 }
 
-</style>
-</cfoutput>
+tr {
+border-color:inherit;
+display:table-row;
+vertical-align:inherit;
+background-color:#e8edff;
+}
+td {
+	background-color:white;
+}
+th {
+	float:left;
+	font-family: Arial;
+	font-size: 11px;
+	font-weight: bold;
+	padding-left:28px;
+}
+td, p {
+	font-family: Arial;
+	font-size: 11px;
+}
+.rowA {
+	background-color: ##e2fee6;
+}
+.rowB {
+	background-color: ##ffffff;
+}
+.header {
+	background-color: ##B9C9FE;
+	border-bottom:10px solid white;
+	font-weight:13px;
+	margin:8px;
+}
+td a {
+	color: black;
+}
+.box {
+	background-color:##ffffcc;
+	border: 1px solid ##cccccc;
+	margin: 0px 2px;
+}
 
+</style>
 <!--- Display mail. --->
 <cfoutput>
 <form name="frmEditEmail" action="bottom.cfm?mail=#url.mail#" target="_self" method="post">
-<table>
+<table width="98%" cellspacing=0 cellpadding=3 border=0>
+<thead>
 	<tr>
-		<td><b>Filename:</b></td>
+		<th><b>Filename:</b></th>
 		<td>#mail.filename#</td>
 		<td></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td><b>Server:</b></td>
+		<th><b>Server:</b></th>
 		<td>#mail.server#</td>
 		<td></td>
 		<td>
@@ -115,7 +154,7 @@ pre {
 		</td>
 	</tr>
 	<tr>
-		<td><b>From:</b></td>
+		<th><b>From:</b></th>
 		<td><a href="mailto:#HTMLEditFormat(mail.sender)#">#HTMLEditFormat(mail.sender)#</a></td>
 		<td></td>
 		<td>
@@ -125,24 +164,24 @@ pre {
 	</tr>
 	<cfif structKeyExists(mail, "replyto")>
 		<tr>
-		<td><b>ReplyTo:</b></td>
-		<td><a href="mailto:#mail.replyto#">#HTMLEditFormat(mail.replyto)#</a></td>
+			<th><b>ReplyTo:</b></th>
+			<td><a href="mailto:#mail.replyto#">#HTMLEditFormat(mail.replyto)#</a></td>
 		</tr>
 	</cfif>
 	<cfif structKeyExists(mail, "failto")>
 		<tr>
-		<td><b>FailTo:</b></td>
-		<td><a href="mailto:#mail.failto#">#HTMLEditFormat(mail.failto)#</a></td>
+			<th><b>FailTo:</b></th>
+			<td><a href="mailto:#mail.failto#">#HTMLEditFormat(mail.failto)#</a></td>
 		</tr>
 	</cfif>	
 	<tr>
-		<td><b>Subject:</b></td>
+		<th><b>Subject:</b></th>
 		<td>#HTMLEditFormat(mail.subject)#</td>
 		<td></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td><b>To:</b></td>
+		<th><b>To:</b></th>
 		<td><a href="mailto:#mail.to#">#HTMLEditFormat(mail.to)#</a></td>
 		<td></td>
 		<td>
@@ -152,7 +191,7 @@ pre {
 	</tr>
 	<cfif structKeyExists(mail, "cc")>
 	<tr>
-		<td><b>CC:</b></td>
+		<th><b>CC:</b></th>
 		<td>#HTMLEditFormat(mail.cc)#</td>
 		<td></td>
 		<td>
@@ -163,7 +202,7 @@ pre {
 	</cfif>
 	<cfif structKeyExists(mail, "bcc")>
 	<tr>
-		<td><b>BCC:</b></td>
+		<th><b>BCC:</b></th>
 		<td>#HTMLEditFormat(mail.bcc)#</td>
 		<td></td>
 		<td>
@@ -172,9 +211,11 @@ pre {
 		</td>
 	</tr>
 	</cfif>
+</thead>
+<tbody>
 	<cfif structKeyExists(mail, "attachments") and arrayLen(mail.attachments)>
 	<tr valign="top">
-		<td><b>Attachments:</b></td>
+		<th><b>Attachments:</b></th>
 		<td>
 		<cfloop index="x" from="1" to="#arrayLen(mail.attachments)#">
 			<cfif application.allowdownload>
@@ -189,18 +230,19 @@ pre {
 	</tr>
 	</cfif>
 	<tr>
-		<td><b>Sent:</b></td>
+		<th><b>Sent:</b></th>
 		<td>#dateFormat(mail.sent)# #timeFormat(mail.sent)#</td>
 		<td></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td></td>
+		<th></th>
 		<td colspan="2"><input type="Submit" name="Edit" value="Edit"></td>
 		<td><input type="Submit" name="Resend" value="Resend"></td>
 	</tr>
 	
 </form>
+</tbody>
 </table>
 
 <hr />
@@ -217,4 +259,13 @@ pre {
 #mailbody#
 </cfif>
 
+<!--- display attachment here --->
+<cfif structKeyExists(mail, "attachments") and arrayLen(mail.attachments)>
+	<cfloop index="x" from="1" to="#arrayLen(mail.attachments)#">
+		<hr />
+		<cffile action="read" file="#mail.attachments[x]#" variable="myfile">
+		<h4>Reading...[#mail.attachments[x]#]</h4>
+		#replacenocase(myfile,'#chr(13)##chr(10)#','<br/>','All')#
+	</cfloop>
+</cfif>
 </cfoutput>

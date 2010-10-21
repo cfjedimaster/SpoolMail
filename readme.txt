@@ -17,6 +17,10 @@ Copyright 2006 Raymond Camden
 If you find this application worthy, I have a Amazon wish list set up (www.amazon.com/o/registry/2TCL1D08EZEYE ). Gifts are always welcome. ;)
 Install directions may be found in install.doc/pdf.
 
+Last Updated: April 8, 2009 (Version 2)
+New UI by Craig Rosenblum
+Extension support by John Ramon
+
 Last Updated: April 8, 2009 (Version 1.5.002)
 Support showing failto
 

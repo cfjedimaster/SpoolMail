@@ -24,7 +24,7 @@
 <html>
 
 <head>
-<frameset rows="250,*" resizeable="true" >
+<frameset rows="320,*" resizeable="true" >
 <frame src="top.cfm" marginheight="0" marginwidth="0">
 <frame src="bottom.cfm" marginheight="0" marginwidth="0" name="bottom" id="bottom">
 </frameset>
