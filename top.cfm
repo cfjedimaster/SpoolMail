@@ -20,6 +20,10 @@
 	<cfset application.perpage = url.PerPage>
 </cfif>
 
+<cfif structKeyExists(form,"delete_id")>
+	<cffile action="delete" file="#application.maildir#/#form.delete_id#">
+</cfif>
+
 <cfif (structKeyExists(form,"delete") or structKeyExists(form, "delete.x")) and structKeyExists(form, "doit") and len(form.doit)>
 	<cfloop index="theFile" list="#form.doit#">
 		<cfif fileExists(application.maildir & "/" & theFile)>
@@ -159,6 +163,11 @@
 	{
 		var oPage = document.getElementById('PerPage')
 		oRef.href = oRef.href + "&PerPage=" + oPage.value;
+	}
+	function doDelete(id) {
+		var dID = document.getElementById('delete_id');
+		dID.value = id;
+		document.MailRecords.submit();
 	}
 </script>
 
@@ -332,6 +341,10 @@ td a {
 	</div>
 	<div style="clear:both;"></div>
 </div>
+
+<form action="top.cfm" method="post" name="mailRecords">
+<input type="Hidden" name="start" value="#url.start#">
+<input type="Hidden" name="delete_id" id="delete_id" value="">
 <table width="98%" cellspacing=0 cellpadding=3 border=0 id="gradient-style">
 <thead>
 	<tr class="header">
@@ -362,17 +375,19 @@ td a {
 		<cfelse>
 			<cfset vClass = "class=""rowB""">
 		</cfif>
-		<tr #vClass# onclick="parent.bottom.location='bottom.cfm?mail=#urlEncodedFormat(name)#';">
+		<tr #vClass#>
 			<!--- Cutter 01.25.06: Split 'Subject' column in two to separate checkboxes from message subjects --->
 			<td class="norightborder" style="text-align:left">
 				<!--- Cutter 01.25.06: Add onclick function call to check 'Select All' box --->
 				<input type="checkbox" name="doit" id="doit" value="#name#" <cfif qMail.recordcount gt 1>onClick="uncheckSelectAllBox(document.forms.mailStatus.checkit,this)"</cfif> />
+				<!--- add delete button to delete messages individually --->
+				<input type="Image" name="delete_message"  src="images/delete_mail.png" onClick="doDelete('#name#');" value="delete" alt="delete message" title="delete message" />
 			</td>
-			<td><a href="bottom.cfm?mail=#urlEncodedFormat(name)#" target="bottom"><cfif structKeyExists(info,"subject") and len(info.subject)>#info.subject#<cfelse>n/a</cfif></a></td>
-			<td><cfif structKeyExists(info, "sender") and len(info.sender)>#info.sender#<cfelse>n/a</cfif></td>
-			<td><cfif structKeyExists(info,"to") and len(info.to)>#info.to#<cfelse>n/a</cfif></td>
-			<td>#fncFileSize(size)#</td>
-			<td><cfif structKeyExists(info, "sent") and isDate(info.sent)>#dateFormat(info.sent)# #timeFormat(info.sent)#<cfelse>n/a</cfif></td>
+			<td onclick="parent.bottom.location='bottom.cfm?mail=#urlEncodedFormat(name)#';"><a href="bottom.cfm?mail=#urlEncodedFormat(name)#" target="bottom"><cfif structKeyExists(info,"subject") and len(info.subject)>#info.subject#<cfelse>n/a</cfif></a></td>
+			<td onclick="parent.bottom.location='bottom.cfm?mail=#urlEncodedFormat(name)#';"><cfif structKeyExists(info, "sender") and len(info.sender)>#info.sender#<cfelse>n/a</cfif></td>
+			<td onclick="parent.bottom.location='bottom.cfm?mail=#urlEncodedFormat(name)#';"><cfif structKeyExists(info,"to") and len(info.to)>#info.to#<cfelse>n/a</cfif></td>
+			<td onclick="parent.bottom.location='bottom.cfm?mail=#urlEncodedFormat(name)#';">#fncFileSize(size)#</td>
+			<td onclick="parent.bottom.location='bottom.cfm?mail=#urlEncodedFormat(name)#';"><cfif structKeyExists(info, "sent") and isDate(info.sent)>#dateFormat(info.sent)# #timeFormat(info.sent)#<cfelse>n/a</cfif></td>
 		</tr>
 	</cfoutput>
 	</tbody>
@@ -388,6 +403,7 @@ td a {
 
 <cfoutput>
 </table>
+</form>
 </cfoutput>
 
 

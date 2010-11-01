@@ -1,5 +1,5 @@
 LICENSE 
-Copyright 2006 Raymond Camden
+Copyright 2006-2010 Raymond Camden
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,6 +16,12 @@ Copyright 2006 Raymond Camden
    
 If you find this application worthy, I have a Amazon wish list set up (www.amazon.com/o/registry/2TCL1D08EZEYE ). Gifts are always welcome. ;)
 Install directions may be found in install.doc/pdf.
+
+Last Updated: October 21, 2010 (Version 2.002)
+UI updates again by Craig Rosenblum. From his notes:
+1. Being able to delete individual email messages at a time.
+2. changed from tr onclick to td onclick for every row but the checkbox, so that when you click on the checkbox or near it, it won't cause a message to be displayed.
+
 
 Last Updated: October 21, 2010 (Version 2.001)
 Scott Stroz suggested I tweak where the extension shows up - good point - it can now be evoked from project view as well.
