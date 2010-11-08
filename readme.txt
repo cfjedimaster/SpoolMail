@@ -17,6 +17,10 @@ Copyright 2006-2010 Raymond Camden
 If you find this application worthy, I have a Amazon wish list set up (www.amazon.com/o/registry/2TCL1D08EZEYE ). Gifts are always welcome. ;)
 Install directions may be found in install.doc/pdf.
 
+Last Updated: November 8, 2010 (Version 2.003)
+Giampiero Bonifazi found a BAD bug in top.cfm that would throw an error on refresh.
+If you use the CFB extension, be sure to update your copy there as well.
+
 Last Updated: October 21, 2010 (Version 2.002)
 UI updates again by Craig Rosenblum. From his notes:
 1. Being able to delete individual email messages at a time.

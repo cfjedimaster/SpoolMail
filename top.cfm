@@ -20,8 +20,8 @@
 	<cfset application.perpage = url.PerPage>
 </cfif>
 
-<cfif structKeyExists(form,"delete_id")>
-	<cffile action="delete" file="#application.maildir#/#form.delete_id#">
+<cfif structKeyExists(form,"delete_id") and form.delete_id neq "">
+   <cffile action="delete" file="#application.maildir#/#form.delete_id#">
 </cfif>
 
 <cfif (structKeyExists(form,"delete") or structKeyExists(form, "delete.x")) and structKeyExists(form, "doit") and len(form.doit)>
