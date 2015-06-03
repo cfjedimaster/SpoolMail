@@ -17,6 +17,9 @@ Copyright 2006-2010 Raymond Camden
 If you find this application worthy, I have a Amazon wish list set up (www.amazon.com/o/registry/2TCL1D08EZEYE ). Gifts are always welcome. ;)
 Install directions may be found in install.doc/pdf.
 
+Last Updated: June 2, 2015
+PR by @wellercs to fix it for Lucee, and I fixed a typo.
+
 Last Updated: November 8, 2010 (Version 2.003)
 Giampiero Bonifazi found a BAD bug in top.cfm that would throw an error on refresh.
 If you use the CFB extension, be sure to update your copy there as well.
@@ -66,7 +69,10 @@ Removed some CF8 only syntax.
 Last Updated: October 30, 2007 (Version 1.3)
 Sam Farmer made the following updates to udf.cfm and bottom.cfm:
 
-Sam: One issue I ran into is that we send out multipart emails and these where showing up as html.  Which was fine but not ideal.  Anyhoo, I added some code to make it work with multipart emails:- Added some code to the getMail function in udf.cfm to parse the body into plain and text.- Added some code at the bottom of bottom.cfm 
+Sam: One issue I ran into is that we send out multipart emails and these where showing up as html.  Which was fine but not ideal.  Anyhoo, I added some code to make it work with multipart emails:
+
+- Added some code to the getMail function in udf.cfm to parse the body into plain and text.
+- Added some code at the bottom of bottom.cfm 
 
 Last Updated: June 29, 2007 (Version 1.2)
 Somehow udf.cfm/getMail had the cache turned off. This greatly slowed down performance. I fixed
