@@ -12,7 +12,7 @@
 	<h2>Sorry!</h2>
 	
 	<p>
-	Something has gone wrong. I cann't seem to find your undelivered folder at:<br />
+	Something has gone wrong. I can't seem to find your undelivered folder at:<br />
 	#application.maildir#
 	</p>
 	</cfoutput>
