@@ -13,7 +13,7 @@
 	
 	<p>
 	Something has gone wrong. I cann't seem to find your undelivered folder at:<br />
-	#maildir#
+	#application.maildir#
 	</p>
 	</cfoutput>
 	
